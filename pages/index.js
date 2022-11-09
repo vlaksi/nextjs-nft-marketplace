@@ -3,7 +3,7 @@ import NFTBox from '../components/NFTBox';
 import networkMapping from '../constants/networkMapping.json';
 import GET_ACTIVE_ITEMS from '../constants/subgraphQueries';
 import { useQuery } from '@apollo/client';
-import { Card, Illustration } from 'web3uikit';
+import NotConnectedWallet from '../components/NotConnectedWallet';
 
 export default function Home() {
   const { isWeb3Enabled, chainId } = useMoralis();
@@ -13,8 +13,6 @@ export default function Home() {
   const { loading, error, data: listedNfts } = useQuery(GET_ACTIVE_ITEMS);
 
   console.log({ listedNfts });
-  const imageURI =
-    'https://png.pngtree.com/png-vector/20220519/ourmid/pngtree-electric-socket-and-plug-disconnect-png-image_4684939.png';
 
   return (
     <div className="container mx-auto">
@@ -48,24 +46,7 @@ export default function Home() {
             })
           )
         ) : (
-          <div
-            style={{
-              width: '500px',
-              marginTop: '10%',
-            }}
-          >
-            <Card
-              description="We do not own private keys and cannot access your funds without your confirmation"
-              onClick={function noRefCheck() {}}
-              setIsSelected={function noRefCheck() {}}
-              title="Connect Your Wallet"
-              tooltipText="Connect with one of available wallet providers or create a new wallet"
-            >
-              <div>
-                <Illustration height="230px" logo="bundle" width="100%" />
-              </div>
-            </Card>
-          </div>
+          <NotConnectedWallet />
         )}
       </div>
     </div>
