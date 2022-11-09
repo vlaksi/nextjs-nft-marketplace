@@ -6,6 +6,7 @@ import nftAbi from '../constants/BasicNft.json';
 import nftMarketplaceAbi from '../constants/NftMarketplace.json';
 import networkMapping from '../constants/networkMapping.json';
 import { useEffect, useState } from 'react';
+import NotConnectedWallet from '../components/NotConnectedWallet';
 
 export default function Home() {
   const { chainId, account, isWeb3Enabled } = useMoralis();
@@ -107,40 +108,46 @@ export default function Home() {
     <div className={styles.container}>
       <div
         style={{
-          marginTop: '10px',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
         }}
       >
-        <Form
-          buttonConfig={{
-            theme: 'primary',
-          }}
-          onSubmit={approveAndList}
-          data={[
-            {
-              name: 'NFT Address',
-              type: 'text',
-              value: '',
-              key: 'nftAddress',
-            },
-            {
-              name: 'Token ID',
-              type: 'number',
-              value: '',
-              key: 'tokenId',
-            },
-            {
-              name: 'Price (in ETH)',
-              type: 'number',
-              value: '',
-              key: 'price',
-            },
-          ]}
-          title="Sell your NFT!"
-          id="Main Form"
-        />
+        {!isWeb3Enabled ? (
+          <NotConnectedWallet />
+        ) : (
+          <Form
+            style={{
+              marginTop: '10px',
+            }}
+            buttonConfig={{
+              theme: 'primary',
+            }}
+            onSubmit={approveAndList}
+            data={[
+              {
+                name: 'NFT Address',
+                type: 'text',
+                value: '',
+                key: 'nftAddress',
+              },
+              {
+                name: 'Token ID',
+                type: 'number',
+                value: '',
+                key: 'tokenId',
+              },
+              {
+                name: 'Price (in ETH)',
+                type: 'number',
+                value: '',
+                key: 'price',
+              },
+            ]}
+            title="Sell your NFT!"
+            id="Main Form"
+          />
+        )}
       </div>
 
       <div>Withdraw {proceeds} proceeds</div>
