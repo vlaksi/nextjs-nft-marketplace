@@ -113,6 +113,7 @@ export default function Home() {
           justifyContent: 'center',
         }}
       >
+        {/* FORM */}
         {!isWeb3Enabled ? (
           <NotConnectedWallet />
         ) : (
@@ -150,26 +151,31 @@ export default function Home() {
         )}
       </div>
 
-      <div>Withdraw {proceeds} proceeds</div>
-      {proceeds != '0' ? (
-        <Button
-          onClick={() => {
-            runContractFunction({
-              params: {
-                abi: nftMarketplaceAbi,
-                contractAddress: marketplaceAddress,
-                functionName: 'withdrawProceeds',
-                params: {},
-              },
-              onError: (error) => console.log(error),
-              onSuccess: () => handleWithdrawSuccess,
-            });
-          }}
-          text="Withdraw"
-          type="button"
-        />
-      ) : (
-        <div>No proceeds detected</div>
+      {/* PROCEEDS */}
+      {isWeb3Enabled && (
+        <>
+          <div>Withdraw {proceeds} proceeds</div>
+          {proceeds != '0' ? (
+            <Button
+              onClick={() => {
+                runContractFunction({
+                  params: {
+                    abi: nftMarketplaceAbi,
+                    contractAddress: marketplaceAddress,
+                    functionName: 'withdrawProceeds',
+                    params: {},
+                  },
+                  onError: (error) => console.log(error),
+                  onSuccess: () => handleWithdrawSuccess,
+                });
+              }}
+              text="Withdraw"
+              type="button"
+            />
+          ) : (
+            <div>No proceeds detected</div>
+          )}
+        </>
       )}
     </div>
   );
