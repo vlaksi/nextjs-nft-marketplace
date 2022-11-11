@@ -111,7 +111,11 @@ export default function NFTBox({
 
   return (
     <div>
-      <div>
+      <div
+        style={{
+          margin: '0px 15px',
+        }}
+      >
         {imageURI ? (
           <div>
             <UpdateListingModal
