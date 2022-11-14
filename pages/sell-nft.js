@@ -74,14 +74,6 @@ export default function Home() {
     });
   }
 
-  const handleWithdrawSuccess = () => {
-    dispatch({
-      type: 'success',
-      message: 'Withdrawing proceeds',
-      position: 'topR',
-    });
-  };
-
   async function setupUI() {
     const returnedProceeds = await runContractFunction({
       params: {
@@ -150,33 +142,6 @@ export default function Home() {
           />
         )}
       </div>
-
-      {/* PROCEEDS */}
-      {isWeb3Enabled && (
-        <>
-          <div>Withdraw {proceeds} proceeds</div>
-          {proceeds != '0' ? (
-            <Button
-              onClick={() => {
-                runContractFunction({
-                  params: {
-                    abi: nftMarketplaceAbi,
-                    contractAddress: marketplaceAddress,
-                    functionName: 'withdrawProceeds',
-                    params: {},
-                  },
-                  onError: (error) => console.log(error),
-                  onSuccess: () => handleWithdrawSuccess,
-                });
-              }}
-              text="Withdraw"
-              type="button"
-            />
-          ) : (
-            <div>No proceeds detected</div>
-          )}
-        </>
-      )}
     </div>
   );
 }
